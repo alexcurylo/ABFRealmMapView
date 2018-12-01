@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		432551FBE64708E8322DC8BD /* Pods_RealmMapViewExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48920EBBA8900C169828E5F6 /* Pods_RealmMapViewExample.framework */; };
+		137D129521A3ADD98C6A6D8B /* Pods_RealmMapViewExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 627849994EB95DA00603858C /* Pods_RealmMapViewExample.framework */; };
 		A054C17C1BBA0E730003618A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A054C17B1BBA0E730003618A /* AppDelegate.swift */; };
 		A054C17E1BBA0E730003618A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A054C17D1BBA0E730003618A /* ViewController.swift */; };
 		A054C1811BBA0E730003618A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A054C17F1BBA0E730003618A /* Main.storyboard */; };
@@ -66,8 +66,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		08148CF2C129A6FC726D8A3E /* Pods-RealmMapViewExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmMapViewExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealmMapViewExample/Pods-RealmMapViewExample.debug.xcconfig"; sourceTree = "<group>"; };
-		48920EBBA8900C169828E5F6 /* Pods_RealmMapViewExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmMapViewExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FB417D4858846A298D868C2 /* Pods-RealmMapViewExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmMapViewExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealmMapViewExample/Pods-RealmMapViewExample.release.xcconfig"; sourceTree = "<group>"; };
+		627849994EB95DA00603858C /* Pods_RealmMapViewExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmMapViewExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A054C1781BBA0E730003618A /* RealmMapViewExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealmMapViewExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A054C17B1BBA0E730003618A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A054C17D1BBA0E730003618A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -75,7 +75,7 @@
 		A054C1821BBA0E730003618A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A054C1851BBA0E730003618A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A054C1871BBA0E730003618A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DE3E139DAE31B51E9E09A857 /* Pods-RealmMapViewExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmMapViewExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealmMapViewExample/Pods-RealmMapViewExample.release.xcconfig"; sourceTree = "<group>"; };
+		D92C0DC1B97E336DFFE5B155 /* Pods-RealmMapViewExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmMapViewExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealmMapViewExample/Pods-RealmMapViewExample.debug.xcconfig"; sourceTree = "<group>"; };
 		F9F08BEC1E7F92500047DA65 /* ABFRealmMapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ABFRealmMapView.xcodeproj; path = ../ABFRealmMapView.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,19 +85,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9F08BF51E7F925D0047DA65 /* ABFRealmMapView.framework in Frameworks */,
-				432551FBE64708E8322DC8BD /* Pods_RealmMapViewExample.framework in Frameworks */,
 				F9F08BF91E7F925D0047DA65 /* RealmMapView.framework in Frameworks */,
+				137D129521A3ADD98C6A6D8B /* Pods_RealmMapViewExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		47E2481198D8F0EAFEF7FC38 /* Pods */ = {
+		274401D3C990B15E9CD381A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				08148CF2C129A6FC726D8A3E /* Pods-RealmMapViewExample.debug.xcconfig */,
-				DE3E139DAE31B51E9E09A857 /* Pods-RealmMapViewExample.release.xcconfig */,
+				627849994EB95DA00603858C /* Pods_RealmMapViewExample.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6FE7BF80FCEE927A97CA4234 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D92C0DC1B97E336DFFE5B155 /* Pods-RealmMapViewExample.debug.xcconfig */,
+				5FB417D4858846A298D868C2 /* Pods-RealmMapViewExample.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -108,8 +116,8 @@
 				F9F08BEC1E7F92500047DA65 /* ABFRealmMapView.xcodeproj */,
 				A054C17A1BBA0E730003618A /* RealmMapViewExample */,
 				A054C1791BBA0E730003618A /* Products */,
-				47E2481198D8F0EAFEF7FC38 /* Pods */,
-				FAC6F161DC63F75D77441517 /* Frameworks */,
+				6FE7BF80FCEE927A97CA4234 /* Pods */,
+				274401D3C990B15E9CD381A1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -143,14 +151,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FAC6F161DC63F75D77441517 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				48920EBBA8900C169828E5F6 /* Pods_RealmMapViewExample.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -158,12 +158,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A054C18A1BBA0E730003618A /* Build configuration list for PBXNativeTarget "RealmMapViewExample" */;
 			buildPhases = (
-				0203E10A93BECA59BC47BD1D /* [CP] Check Pods Manifest.lock */,
+				74E0F1F77AE9EB3290434160 /* [CP] Check Pods Manifest.lock */,
 				A054C1741BBA0E730003618A /* Sources */,
 				A054C1751BBA0E730003618A /* Frameworks */,
 				A054C1761BBA0E730003618A /* Resources */,
-				1CAC6E0C4BEC39011F51B21F /* [CP] Embed Pods Frameworks */,
 				F9F08BFD1E7F925D0047DA65 /* Embed Frameworks */,
+				966F43659C2E8638DAD26C56 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -246,16 +246,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0203E10A93BECA59BC47BD1D /* [CP] Check Pods Manifest.lock */ = {
+		74E0F1F77AE9EB3290434160 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-RealmMapViewExample-checkManifestLockResult.txt",
 			);
@@ -264,10 +268,12 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1CAC6E0C4BEC39011F51B21F /* [CP] Embed Pods Frameworks */ = {
+		966F43659C2E8638DAD26C56 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-RealmMapViewExample/Pods-RealmMapViewExample-frameworks.sh",
@@ -276,6 +282,8 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwiftSFRestaurantData/RealmSwiftSFRestaurantData.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
@@ -443,9 +451,9 @@
 		};
 		A054C18B1BBA0E730003618A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 08148CF2C129A6FC726D8A3E /* Pods-RealmMapViewExample.debug.xcconfig */;
+			baseConfigurationReference = D92C0DC1B97E336DFFE5B155 /* Pods-RealmMapViewExample.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = RealmMapViewExample/Info.plist;
@@ -460,9 +468,9 @@
 		};
 		A054C18C1BBA0E730003618A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE3E139DAE31B51E9E09A857 /* Pods-RealmMapViewExample.release.xcconfig */;
+			baseConfigurationReference = 5FB417D4858846A298D868C2 /* Pods-RealmMapViewExample.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = RealmMapViewExample/Info.plist;
