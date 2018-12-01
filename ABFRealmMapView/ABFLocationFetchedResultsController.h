@@ -255,7 +255,7 @@ typedef NSUInteger(^ABFClusterSizeForZoomLevel)(ABFZoomLevel zoomLevel);
  *  The default block the returns cluster grid cell size based on zoom level
  */
 NS_ASSUME_NONNULL_BEGIN
-extern ABFClusterSizeForZoomLevel ABFDefaultClusterSizeForZoomLevel();
+extern ABFClusterSizeForZoomLevel ABFDefaultClusterSizeForZoomLevel(void);
 NS_ASSUME_NONNULL_END
 
 /**
