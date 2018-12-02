@@ -280,7 +280,7 @@ open class RealmMapView: MKMapView {
             delay: 0,
             usingSpringWithDamping: 0.5,
             initialSpringVelocity: 1,
-            options: UIViewAnimationOptions(),
+            options: UIView.AnimationOptions(),
             animations: {
                 view.transform = CGAffineTransform.identity.scaledBy(x: 1.0, y: 1.0)
             },
@@ -289,15 +289,15 @@ open class RealmMapView: MKMapView {
     }
     
     fileprivate func coordinateRegion(_ safeObjects: [ABFLocationSafeRealmObject]) -> MKCoordinateRegion {
-        var rect = MKMapRectNull
+        var rect = MKMapRect.null
         
         for safeObject in safeObjects {
-            let point = MKMapPointForCoordinate(safeObject.coordinate)
+            let point = MKMapPoint(safeObject.coordinate)
             
-            rect = MKMapRectUnion(rect, MKMapRectMake(point.x, point.y, 0, 0))
+            rect = rect.union(MKMapRect(x: point.x, y: point.y, width: 0, height: 0))
         }
         
-        var region = MKCoordinateRegionForMapRect(rect)
+        var region = MKCoordinateRegion(rect)
         
         region = self.regionThatFits(region)
         
@@ -410,7 +410,7 @@ extension RealmMapView: MKMapViewDelegate {
         self.externalDelegate?.mapView?(mapView, didFailToLocateUserWithError: error)
     }
     
-    public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+    public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
         self.externalDelegate?.mapView?(mapView, annotationView: view, didChange: newState, fromOldState: oldState)
     }
     
