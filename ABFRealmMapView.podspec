@@ -9,7 +9,7 @@ The ABFRealmMapView class creates an interface object that inherits MKMapView an
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author       = { "Adam Fish" => "af@realm.io" }
   s.platform     = :ios, "7.0"
-  s.source       = { :git => "https://github.com/bigfish24/ABFRealmMapView.git", :tag => "v#{s.version}" }
+  s.source       = { :git => "https://github.com/PSKuznetsov/ABFRealmMapView.git", :tag => "v#{s.version}" }
   s.source_files  = "ABFRealmMapView/*.{h,m}"
   s.requires_arc = true
   s.dependency "Realm", ">= 3.0.0"
