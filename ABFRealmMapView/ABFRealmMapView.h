@@ -164,4 +164,6 @@
  */
 - (void)refreshMapView;
 
+- (void)addAnnotationsToMapView:(NSSet *)annotations;
+
 @end
