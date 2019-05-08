@@ -166,4 +166,6 @@
 
 - (void)addAnnotationsToMapView:(NSSet *)annotations;
 
+- (MKCoordinateRegion)coordinateRegionForSafeObjects:(NSArray *)safeObjects;
+
 @end
