@@ -1,10 +1,8 @@
 source 'https://cdn.cocoapods.org/'
 platform :ios, '11.0'
 
-use_frameworks!
-inhibit_all_warnings!
-
 target 'RealmMapViewExample' do
-  pod 'RealmSwift', '~> 3.17.0'
-  pod 'RealmSwiftSFRestaurantData', '>=0.5'
+  pod 'Realm', :modular_headers => true
+  pod 'RealmSwift'
+  pod 'RealmSFRestaurantData', ">=0.3", :modular_headers => true
 end
