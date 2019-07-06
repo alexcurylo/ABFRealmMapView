@@ -8,8 +8,8 @@
 
 import UIKit
 import MapKit
+import RealmSFRestaurantData
 import RealmSwift
-import RealmSwiftSFRestaurantData
 import RealmMapView
 
 class ViewController: UIViewController {
