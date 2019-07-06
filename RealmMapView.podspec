@@ -12,8 +12,8 @@ The RealmMapView class creates an interface object that inherits MKMapView and m
   s.source       = { :git => "https://github.com/bigfish24/ABFRealmMapView.git", :tag => "v#{s.version}" }
   s.source_files  = "RealmMapView/*.{h,swift}"
   s.requires_arc = true
-  s.dependency "RealmSwift", ">= 3.0.0"
   s.swift_version = '5.0'
+  s.dependency "RealmSwift", ">= 3.17.0"
   s.dependency "ABFRealmMapView", ">=#{s.version}"
   s.dependency "RBQSafeRealmObject"
 end
