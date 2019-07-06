@@ -129,7 +129,8 @@ open class RealmMapView: MKMapView {
         
         let rlmConfig = ObjectiveCSupport.convert(object: self.realmConfiguration)
         
-        if let rlmRealm = try? RLMRealm(configuration: rlmConfig) {
+        do {
+            let rlmRealm = try RLMRealm(configuration: rlmConfig)
             
             let fetchRequest = ABFLocationFetchRequest(entityName: self.entityName!, in: rlmRealm, latitudeKeyPath: self.latitudeKeyPath!, longitudeKeyPath: self.longitudeKeyPath!, for: currentRegion)
             fetchRequest.predicate = NSPredicateForCoordinateRegion(currentRegion, self.latitudeKeyPath!, self.longitudeKeyPath!)
@@ -181,6 +182,8 @@ open class RealmMapView: MKMapView {
             }
             
             self.mapQueue.addOperation(refreshOperation)
+        } catch {
+            print("configuration error: \(error)")
         }
         
         objc_sync_exit(self)
