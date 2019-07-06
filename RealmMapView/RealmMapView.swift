@@ -300,14 +300,13 @@ open class RealmMapView: MKMapView {
             rect = rect.union(MKMapRect(x: point.x, y: point.y, width: 0, height: 0))
         }
         
-        var region = MKCoordinateRegion(rect)
-        
-        region = self.regionThatFits(region)
-        
-        region.span.latitudeDelta *= 1.3
-        region.span.longitudeDelta *= 1.3
-        
-        return region
+        let outset = -0.3
+        let outsetRect = rect.insetBy(dx: rect.width * outset,
+                                      dy: rect.height * outset)
+        let outsetRegion = MKCoordinateRegion(outsetRect)
+        let fittedRegion = regionThatFits(outsetRegion)
+
+        return fittedRegion
     }
 }
 
