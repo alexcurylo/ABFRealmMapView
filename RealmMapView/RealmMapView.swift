@@ -398,7 +398,7 @@ extension RealmMapView: MKMapViewDelegate {
     }
     
     public func mapViewWillStartLocatingUser(_ mapView: MKMapView) {
-        self.externalDelegate?.mapViewDidStopLocatingUser?(mapView)
+        self.externalDelegate?.mapViewWillStartLocatingUser?(mapView)
     }
     
     public func mapViewDidStopLocatingUser(_ mapView: MKMapView) {
