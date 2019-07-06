@@ -335,31 +335,6 @@ static NSString * const ABFAnnotationViewReuseId = @"ABFAnnotationViewReuseId";
     }
 }
 
-#if TARGET_OS_IPHONE
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
-{
-    id<MKMapViewDelegate> delegate = self.externalDelegate;
-    
-    if ([delegate respondsToSelector:@selector(mapView:viewForOverlay:)]) {
-        return [delegate mapView:mapView viewForOverlay:overlay];
-    }
-    
-    return nil;
-}
-
-- (void)mapView:(MKMapView *)mapView didAddOverlayViews:(NSArray *)overlayViews
-{
-    id<MKMapViewDelegate> delegate = self.externalDelegate;
-    
-    if ([delegate respondsToSelector:@selector(mapView:didAddOverlayViews:)]) {
-        [delegate mapView:mapView didAddOverlayViews:overlayViews];
-    }
-}
-#pragma clang diagnostic pop
-#endif
-
 #pragma mark - Setters
 
 - (void)setDelegate:(id<MKMapViewDelegate>)delegate
