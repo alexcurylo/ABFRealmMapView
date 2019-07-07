@@ -316,6 +316,7 @@ Delegate proxy that allows the controller to trigger auto refresh and then rebro
 :nodoc:
 */
 extension RealmMapView: MKMapViewDelegate {
+
     public func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
         self.externalDelegate?.mapView?(mapView, regionWillChangeAnimated: animated)
     }
@@ -426,6 +427,12 @@ extension RealmMapView: MKMapViewDelegate {
     
     public func mapView(_ mapView: MKMapView, didAdd renderers: [MKOverlayRenderer]) {
         self.externalDelegate?.mapView?(mapView, didAdd: renderers)
+    }
+
+    public func mapView(_ mapView: MKMapView,
+                        clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
+        // Setting clusteringIdentifier with RealmMapView is a usage error
+        return (self.externalDelegate?.mapView?(mapView, clusterAnnotationForMemberAnnotations: memberAnnotations))!
     }
 }
 
