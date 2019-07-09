@@ -134,6 +134,9 @@ open class RealmMapView: MKMapView {
         // override entry point
     }
 
+    /// Expose serial work queue for scheduling
+    public var serialWorkQueue: OperationQueue { return mapQueue }
+
     // MARK: Functions
     
     /// Performs a fresh fetch for Realm objects based on the current visible map rect
@@ -239,6 +242,7 @@ open class RealmMapView: MKMapView {
     fileprivate let mapQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
+        queue.qualityOfService = .userInteractive
         
         return queue
     }()
