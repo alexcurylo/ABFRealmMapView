@@ -119,10 +119,10 @@ open class RealmMapView: MKMapView {
 
     /// Provide annotation update state notification entry points
     public var isChangingRegion = false {
-        didSet { isUpdatingAnnotations = isRefreshingMap || isChangingRegion }
+        didSet { isUpdatingAnnotations = isRefreshingMapCount > 0 || isChangingRegion }
     }
-    public var isRefreshingMap = false {
-        didSet { isUpdatingAnnotations = isRefreshingMap || isChangingRegion }
+    public var isRefreshingMapCount = 0 {
+        didSet { isUpdatingAnnotations = isRefreshingMapCount > 0 || isChangingRegion }
     }
     public var isUpdatingAnnotations = false {
         didSet {
@@ -151,9 +151,7 @@ open class RealmMapView: MKMapView {
     /// Performs a fresh fetch for Realm objects based on the current visible map rect
     open func refreshMapView() {
         objc_sync_enter(self)
-
-        isRefreshingMap = true
-        mapQueue.cancelAllOperations()
+        isRefreshingMapCount += 1
         
         let currentRegion = self.region
         
@@ -209,7 +207,7 @@ open class RealmMapView: MKMapView {
             
             self.mapQueue.addOperation(refreshOperation)
         } catch {
-            isRefreshingMap = false
+            isRefreshingMapCount -= 1
             #if DEBUG
             print("configuration error: \(error)")
             #endif
@@ -302,9 +300,9 @@ open class RealmMapView: MKMapView {
                         self.removeAnnotations(removeAnnotations)
                     }
                 }
-                self.isRefreshingMap = false
             }
-       }
+            self.isRefreshingMapCount -= 1
+        }
     }
     
     fileprivate func addAnimation(_ view: UIView) {
