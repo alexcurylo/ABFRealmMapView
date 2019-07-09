@@ -117,23 +117,29 @@ open class RealmMapView: MKMapView {
     /// along with the generated predicate for the location bounding box.
     open var basePredicate: NSPredicate?
 
-    /// Provide refreshing state notification entry points
-    open var isRefreshingMap = false {
+    /// Provide annotation update state notification entry points
+    public var isChangingRegion = false {
+        didSet { isUpdatingAnnotations = isRefreshingMap || isChangingRegion }
+    }
+    public var isRefreshingMap = false {
+        didSet { isUpdatingAnnotations = isRefreshingMap || isChangingRegion }
+    }
+    public var isUpdatingAnnotations = false {
         didSet {
-            switch (oldValue, isRefreshingMap) {
+            switch (oldValue, isUpdatingAnnotations) {
             case (false, true):
-                willRefreshMap()
+                willUpdateAnnotations()
             case (true, false):
-                didRefreshMap()
+                didUpdateAnnotations()
             default:
                 break
             }
         }
     }
-    open func willRefreshMap() {
+    open func willUpdateAnnotations() {
         // override entry point
     }
-    open func didRefreshMap() {
+    open func didUpdateAnnotations() {
         // override entry point
     }
 
@@ -242,6 +248,7 @@ open class RealmMapView: MKMapView {
     
     fileprivate let mapQueue: OperationQueue = {
         let queue = OperationQueue()
+        queue.name = "RealmMapView"
         queue.maxConcurrentOperationCount = 1
         queue.qualityOfService = .userInteractive
         
@@ -343,19 +350,17 @@ Delegate proxy that allows the controller to trigger auto refresh and then rebro
 extension RealmMapView: MKMapViewDelegate {
 
     public func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-        isRefreshingMap = true
+        isChangingRegion = true
 
         self.externalDelegate?.mapView?(mapView, regionWillChangeAnimated: animated)
     }
     
     public func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        
         if self.autoRefresh {
             self.refreshMapView()
-        } else {
-            isRefreshingMap = false
         }
-        
+        isChangingRegion = false
+
         self.externalDelegate?.mapView?(mapView, regionDidChangeAnimated: animated)
     }
     
