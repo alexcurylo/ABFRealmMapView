@@ -186,7 +186,6 @@ open class RealmMapView: MKMapView {
                     
                     let annotations = self.fetchedResultsController.annotations
                     self.addAnnotationsToMapView(annotations)
-                    self.isRefreshingMap = false
                 }
             }
             else {
@@ -196,7 +195,6 @@ open class RealmMapView: MKMapView {
                     
                     let annotations = self.fetchedResultsController.annotations
                     self.addAnnotationsToMapView(annotations)
-                    self.isRefreshingMap = false
                 }
             }
             
@@ -252,15 +250,15 @@ open class RealmMapView: MKMapView {
     fileprivate func addAnnotationsToMapView(_ annotations: Set<ABFAnnotation>) {
         let safeObjects = self.fetchedResultsController.safeObjects
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else {
+            guard let self = self else {
                 return
             }
             
             let currentAnnotations: NSMutableSet
-            if strongSelf.annotations.isEmpty {
+            if self.annotations.isEmpty {
                 currentAnnotations = NSMutableSet()
             } else {
-                currentAnnotations = NSMutableSet(array: strongSelf.annotations)
+                currentAnnotations = NSMutableSet(array: self.annotations)
             }
             
             let newAnnotations = annotations
@@ -277,25 +275,26 @@ open class RealmMapView: MKMapView {
             
             toRemove.minus(newAnnotations)
                 
-            if strongSelf.zoomOnFirstRefresh && safeObjects.count > 0 {
+            if self.zoomOnFirstRefresh && safeObjects.count > 0 {
                 
-                strongSelf.zoomOnFirstRefresh = false
+                self.zoomOnFirstRefresh = false
                 
-                let region = strongSelf.coordinateRegion(safeObjects)
+                let region = self.coordinateRegion(safeObjects)
                 
-                strongSelf.setRegion(region, animated: true)
+                self.setRegion(region, animated: true)
             }
             else {
                 if let addAnnotations = toAdd.allObjects as? [MKAnnotation] {
                     
                     if let removeAnnotations = toRemove.allObjects as? [MKAnnotation] {
                         
-                        strongSelf.addAnnotations(addAnnotations)
-                        strongSelf.removeAnnotations(removeAnnotations)
+                        self.addAnnotations(addAnnotations)
+                        self.removeAnnotations(removeAnnotations)
                     }
                 }
+                self.isRefreshingMap = false
             }
-        }
+       }
     }
     
     fileprivate func addAnimation(_ view: UIView) {
