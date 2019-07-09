@@ -120,10 +120,13 @@ open class RealmMapView: MKMapView {
     /// Provide refreshing state notification entry points
     open var isRefreshingMap = false {
         didSet {
-            if isRefreshingMap {
+            switch (oldValue, isRefreshingMap) {
+            case (false, true):
                 willRefreshMap()
-            } else {
+            case (true, false):
                 didRefreshMap()
+            default:
+                break
             }
         }
     }
@@ -340,6 +343,8 @@ Delegate proxy that allows the controller to trigger auto refresh and then rebro
 extension RealmMapView: MKMapViewDelegate {
 
     public func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+        isRefreshingMap = true
+
         self.externalDelegate?.mapView?(mapView, regionWillChangeAnimated: animated)
     }
     
@@ -347,6 +352,8 @@ extension RealmMapView: MKMapViewDelegate {
         
         if self.autoRefresh {
             self.refreshMapView()
+        } else {
+            isRefreshingMap = false
         }
         
         self.externalDelegate?.mapView?(mapView, regionDidChangeAnimated: animated)
