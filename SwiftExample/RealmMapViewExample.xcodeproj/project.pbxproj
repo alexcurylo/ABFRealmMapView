@@ -3,20 +3,20 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C2EF57C22D6E22200517B58 /* ABFClusterAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA63868C22D15ED6001B4424 /* ABFClusterAnnotationView.m */; };
+		8C2EF57D22D6E22200517B58 /* ABFLocationFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA63869522D15ED6001B4424 /* ABFLocationFetchedResultsController.m */; };
+		8C2EF57E22D6E22200517B58 /* ABFLocationFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FA63869022D15ED6001B4424 /* ABFLocationFetchRequest.m */; };
+		8C2EF57F22D6E22200517B58 /* ABFRealmMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA63868D22D15ED6001B4424 /* ABFRealmMapView.m */; };
 		A054C17C1BBA0E730003618A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A054C17B1BBA0E730003618A /* AppDelegate.swift */; };
 		A054C17E1BBA0E730003618A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A054C17D1BBA0E730003618A /* ViewController.swift */; };
 		A054C1811BBA0E730003618A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A054C17F1BBA0E730003618A /* Main.storyboard */; };
 		A054C1831BBA0E730003618A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A054C1821BBA0E730003618A /* Assets.xcassets */; };
 		A054C1861BBA0E730003618A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A054C1841BBA0E730003618A /* LaunchScreen.storyboard */; };
 		A4457F9C66175E9865754C5A /* libPods-RealmMapViewExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF1379616BD24D6C54005EED /* libPods-RealmMapViewExample.a */; };
-		FA63869722D15ED6001B4424 /* ABFClusterAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA63868C22D15ED6001B4424 /* ABFClusterAnnotationView.m */; };
-		FA63869822D15ED6001B4424 /* ABFRealmMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA63868D22D15ED6001B4424 /* ABFRealmMapView.m */; };
-		FA63869922D15ED6001B4424 /* ABFLocationFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FA63869022D15ED6001B4424 /* ABFLocationFetchRequest.m */; };
-		FA63869A22D15ED6001B4424 /* ABFLocationFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA63869522D15ED6001B4424 /* ABFLocationFetchedResultsController.m */; };
 		FA6386A022D15F2A001B4424 /* RealmMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA63869D22D15F2A001B4424 /* RealmMapView.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		5FB417D4858846A298D868C2 /* Pods-RealmMapViewExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmMapViewExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealmMapViewExample/Pods-RealmMapViewExample.release.xcconfig"; sourceTree = "<group>"; };
+		8C2EF58022D6E28400517B58 /* RealmMapView-BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RealmMapView-BridgingHeader.h"; sourceTree = "<group>"; };
 		A054C1781BBA0E730003618A /* RealmMapViewExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealmMapViewExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A054C17B1BBA0E730003618A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A054C17D1BBA0E730003618A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +114,7 @@
 				A054C1821BBA0E730003618A /* Assets.xcassets */,
 				A054C1841BBA0E730003618A /* LaunchScreen.storyboard */,
 				A054C1871BBA0E730003618A /* Info.plist */,
+				8C2EF58022D6E28400517B58 /* RealmMapView-BridgingHeader.h */,
 			);
 			path = RealmMapViewExample;
 			sourceTree = "<group>";
@@ -181,7 +183,7 @@
 				};
 			};
 			buildConfigurationList = A054C1731BBA0E730003618A /* Build configuration list for PBXProject "RealmMapViewExample" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -259,13 +261,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA63869922D15ED6001B4424 /* ABFLocationFetchRequest.m in Sources */,
-				FA63869722D15ED6001B4424 /* ABFClusterAnnotationView.m in Sources */,
 				FA6386A022D15F2A001B4424 /* RealmMapView.swift in Sources */,
 				A054C17E1BBA0E730003618A /* ViewController.swift in Sources */,
-				FA63869A22D15ED6001B4424 /* ABFLocationFetchedResultsController.m in Sources */,
+				8C2EF57C22D6E22200517B58 /* ABFClusterAnnotationView.m in Sources */,
+				8C2EF57E22D6E22200517B58 /* ABFLocationFetchRequest.m in Sources */,
 				A054C17C1BBA0E730003618A /* AppDelegate.swift in Sources */,
-				FA63869822D15ED6001B4424 /* ABFRealmMapView.m in Sources */,
+				8C2EF57F22D6E22200517B58 /* ABFRealmMapView.m in Sources */,
+				8C2EF57D22D6E22200517B58 /* ABFLocationFetchedResultsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,7 +396,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -409,11 +412,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = RealmMapViewExample/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Realm.RealmMapViewExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "RealmMapViewExample/RealmMapView-BridgingHeader.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -426,11 +432,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = RealmMapViewExample/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Realm.RealmMapViewExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "RealmMapViewExample/RealmMapView-BridgingHeader.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

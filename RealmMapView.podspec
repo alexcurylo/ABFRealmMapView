@@ -15,5 +15,4 @@ The RealmMapView class creates an interface object that inherits MKMapView and m
   s.swift_version = '5.0'
   s.dependency "RealmSwift", ">= 3.17.0"
   s.dependency "ABFRealmMapView", ">=#{s.version}"
-  s.dependency "RBQSafeRealmObject"
 end

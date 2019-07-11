@@ -13,5 +13,4 @@ The ABFRealmMapView class creates an interface object that inherits MKMapView an
   s.source_files  = "ABFRealmMapView/*.{h,m}"
   s.requires_arc = true
   s.dependency "Realm", ">= 3.17.0"
-  s.dependency "RBQSafeRealmObject"
 end
