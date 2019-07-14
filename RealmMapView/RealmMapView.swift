@@ -8,7 +8,9 @@
 
 import MapKit
 import RealmSwift
+#if canImport(ABFRealmMapView)
 import ABFRealmMapView
+#endif
 
 public typealias ClusterAnnotationView = ABFClusterAnnotationView
 public typealias LocationSafeRealmObject = ABFLocationSafeRealmObject
@@ -116,23 +118,62 @@ open class RealmMapView: MKMapView {
     /// Use this property to filter items found by the map. This predicate will be included, via AND,
     /// along with the generated predicate for the location bounding box.
     open var basePredicate: NSPredicate?
-    
+
+    /// Provide annotation update state notification entry points
+    public var isChangingRegion = false {
+        didSet { isUpdatingAnnotations = isRefreshingMapCount > 0 || isChangingRegion }
+    }
+    public var isRefreshingMapCount = 0 {
+        didSet { isUpdatingAnnotations = isRefreshingMapCount > 0 || isChangingRegion }
+    }
+    public var isUpdatingAnnotations = false {
+        didSet {
+            switch (oldValue, isUpdatingAnnotations) {
+            case (false, true):
+                willUpdateAnnotations()
+            case (true, false):
+                didUpdateAnnotations()
+            default:
+                break
+            }
+        }
+    }
+    open func willUpdateAnnotations() {
+        // override entry point
+    }
+    open func didUpdateAnnotations() {
+        // override entry point
+    }
+
+    /// Expose serial work queue for scheduling
+    public var serialWorkQueue: OperationQueue { return mapQueue }
+
     // MARK: Functions
     
     /// Performs a fresh fetch for Realm objects based on the current visible map rect
-    open func refreshMapView() {
+    open func refreshMapView(refreshRegion: MKCoordinateRegion? = nil,
+                             refreshMapRect: MKMapRect? = nil) {
         objc_sync_enter(self)
-        
-        self.mapQueue.cancelAllOperations()
-        
-        let currentRegion = self.region
-        
-        let rlmConfig = ObjectiveCSupport.convert(object: self.realmConfiguration)
-        
-        if let rlmRealm = try? RLMRealm(configuration: rlmConfig) {
-            
-            let fetchRequest = ABFLocationFetchRequest(entityName: self.entityName!, in: rlmRealm, latitudeKeyPath: self.latitudeKeyPath!, longitudeKeyPath: self.longitudeKeyPath!, for: currentRegion)
-            fetchRequest.predicate = NSPredicateForCoordinateRegion(currentRegion, self.latitudeKeyPath!, self.longitudeKeyPath!)
+        isRefreshingMapCount += 1
+
+        let refreshingRegion = refreshRegion ?? region
+        let refreshingMapRect = refreshMapRect ?? visibleMapRect
+        let rlmConfig = ObjectiveCSupport.convert(object: realmConfiguration)
+
+        do {
+            let rlmRealm = try RLMRealm(configuration: rlmConfig)
+            let fetchRequest = ABFLocationFetchRequest(
+                entityName: entityName!,
+                in: rlmRealm,
+                latitudeKeyPath: latitudeKeyPath!,
+                longitudeKeyPath: longitudeKeyPath!,
+                for: refreshingRegion
+            )
+            fetchRequest.predicate = NSPredicateForCoordinateRegion(
+                refreshingRegion,
+                latitudeKeyPath!,
+                longitudeKeyPath!
+            )
 
             var predicates = [NSPredicate]()
             if let basePred = self.basePredicate {
@@ -141,46 +182,44 @@ open class RealmMapView: MKMapView {
             if let fetchPred = fetchRequest.predicate {
                 predicates.append(fetchPred)
             }
-            
             if !predicates.isEmpty {
                 let compPred = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
                 fetchRequest.predicate = compPred
             }
             
             self.fetchedResultsController.update(fetchRequest, titleKeyPath: self.titleKeyPath, subtitleKeyPath: self.subtitleKeyPath)
-            
-            let visibleMapRect = self.visibleMapRect
-            
-            let currentZoomLevel = ABFZoomLevelForVisibleMapRect(visibleMapRect)
+
+            let currentZoomLevel = ABFZoomLevelForVisibleMapRect(refreshingMapRect)
             
             let refreshOperation: BlockOperation
             if self.clusterAnnotations && currentZoomLevel <= self.maxZoomLevelForClustering {
                 
                 let zoomScale = MKZoomScaleForMapView(self)
                 
-                refreshOperation = BlockOperation { [weak self] in
-                    guard let strongSelf = self else {
-                        return
-                    }
-                    strongSelf.fetchedResultsController.performClusteringFetch(forVisibleMapRect: visibleMapRect, zoomScale: zoomScale)
+                refreshOperation = BlockOperation { [weak self, refreshingMapRect] in
+                    guard let self = self else { return }
+                    self.fetchedResultsController.performClusteringFetch(forVisibleMapRect: refreshingMapRect, zoomScale: zoomScale)
                     
-                    let annotations = strongSelf.fetchedResultsController.annotations
-                    strongSelf.addAnnotationsToMapView(annotations)
+                    let annotations = self.fetchedResultsController.annotations
+                    self.addAnnotationsToMapView(annotations)
                 }
             }
             else {
                 refreshOperation = BlockOperation { [weak self] in
-                    guard let strongSelf = self else {
-                        return
-                    }
-                    strongSelf.fetchedResultsController.performFetch()
+                    guard let self = self else { return }
+                    self.fetchedResultsController.performFetch()
                     
-                    let annotations = strongSelf.fetchedResultsController.annotations
-                    strongSelf.addAnnotationsToMapView(annotations)
+                    let annotations = self.fetchedResultsController.annotations
+                    self.addAnnotationsToMapView(annotations)
                 }
             }
             
             self.mapQueue.addOperation(refreshOperation)
+        } catch {
+            isRefreshingMapCount -= 1
+            #if DEBUG
+            print("configuration error: \(error)")
+            #endif
         }
         
         objc_sync_exit(self)
@@ -216,7 +255,9 @@ open class RealmMapView: MKMapView {
     
     fileprivate let mapQueue: OperationQueue = {
         let queue = OperationQueue()
+        queue.name = "RealmMapView"
         queue.maxConcurrentOperationCount = 1
+        queue.qualityOfService = .userInteractive
         
         return queue
     }()
@@ -226,15 +267,15 @@ open class RealmMapView: MKMapView {
     fileprivate func addAnnotationsToMapView(_ annotations: Set<ABFAnnotation>) {
         let safeObjects = self.fetchedResultsController.safeObjects
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else {
+            guard let self = self else {
                 return
             }
             
             let currentAnnotations: NSMutableSet
-            if strongSelf.annotations.isEmpty {
+            if self.annotations.isEmpty {
                 currentAnnotations = NSMutableSet()
             } else {
-                currentAnnotations = NSMutableSet(array: strongSelf.annotations)
+                currentAnnotations = NSMutableSet(array: self.annotations)
             }
             
             let newAnnotations = annotations
@@ -251,24 +292,25 @@ open class RealmMapView: MKMapView {
             
             toRemove.minus(newAnnotations)
                 
-            if strongSelf.zoomOnFirstRefresh && safeObjects.count > 0 {
+            if self.zoomOnFirstRefresh && safeObjects.count > 0 {
                 
-                strongSelf.zoomOnFirstRefresh = false
+                self.zoomOnFirstRefresh = false
                 
-                let region = strongSelf.coordinateRegion(safeObjects)
+                let region = self.coordinateRegion(safeObjects)
                 
-                strongSelf.setRegion(region, animated: true)
+                self.setRegion(region, animated: true)
             }
             else {
                 if let addAnnotations = toAdd.allObjects as? [MKAnnotation] {
                     
                     if let removeAnnotations = toRemove.allObjects as? [MKAnnotation] {
                         
-                        strongSelf.addAnnotations(addAnnotations)
-                        strongSelf.removeAnnotations(removeAnnotations)
+                        self.addAnnotations(addAnnotations)
+                        self.removeAnnotations(removeAnnotations)
                     }
                 }
             }
+            self.isRefreshingMapCount -= 1
         }
     }
     
@@ -297,14 +339,13 @@ open class RealmMapView: MKMapView {
             rect = rect.union(MKMapRect(x: point.x, y: point.y, width: 0, height: 0))
         }
         
-        var region = MKCoordinateRegion(rect)
-        
-        region = self.regionThatFits(region)
-        
-        region.span.latitudeDelta *= 1.3
-        region.span.longitudeDelta *= 1.3
-        
-        return region
+        let outset = -0.3
+        let outsetRect = rect.insetBy(dx: rect.width * outset,
+                                      dy: rect.height * outset)
+        let outsetRegion = MKCoordinateRegion(outsetRect)
+        let fittedRegion = regionThatFits(outsetRegion)
+
+        return fittedRegion
     }
 }
 
@@ -314,16 +355,19 @@ Delegate proxy that allows the controller to trigger auto refresh and then rebro
 :nodoc:
 */
 extension RealmMapView: MKMapViewDelegate {
+
     public func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+        isChangingRegion = true
+
         self.externalDelegate?.mapView?(mapView, regionWillChangeAnimated: animated)
     }
     
     public func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        
         if self.autoRefresh {
             self.refreshMapView()
         }
-        
+        isChangingRegion = false
+
         self.externalDelegate?.mapView?(mapView, regionDidChangeAnimated: animated)
     }
     
@@ -395,7 +439,7 @@ extension RealmMapView: MKMapViewDelegate {
     }
     
     public func mapViewWillStartLocatingUser(_ mapView: MKMapView) {
-        self.externalDelegate?.mapViewDidStopLocatingUser?(mapView)
+        self.externalDelegate?.mapViewWillStartLocatingUser?(mapView)
     }
     
     public func mapViewDidStopLocatingUser(_ mapView: MKMapView) {
@@ -424,6 +468,12 @@ extension RealmMapView: MKMapViewDelegate {
     
     public func mapView(_ mapView: MKMapView, didAdd renderers: [MKOverlayRenderer]) {
         self.externalDelegate?.mapView?(mapView, didAdd: renderers)
+    }
+
+    public func mapView(_ mapView: MKMapView,
+                        clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
+        // Setting clusteringIdentifier with RealmMapView is a usage error
+        return (self.externalDelegate?.mapView?(mapView, clusterAnnotationForMemberAnnotations: memberAnnotations))!
     }
 }
 

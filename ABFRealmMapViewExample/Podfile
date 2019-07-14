@@ -1,9 +1,9 @@
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+source 'https://cdn.cocoapods.org/'
+platform :ios, '11.0'
 
 target 'ABFRealmMapViewExample' do
-  pod 'Realm', '~> 3.0.0'
   pod 'RealmSFRestaurantData', ">=0.3"
+  pod 'Realm', '~> 3.17.0'
 
   target 'ABFRealmMapViewExampleTests' do
     inherit! :search_paths
